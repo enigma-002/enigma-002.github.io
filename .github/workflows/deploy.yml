@@ -17,13 +17,16 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
+          cache-dependency-path: my-site/package-lock.json
       - run: npm ci
+        working-directory: my-site
       - run: npm run build
+        working-directory: my-site
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: my-site/out
 
   deploy:
     needs: build
